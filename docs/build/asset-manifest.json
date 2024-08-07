@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/label-generator/static/css/main.1830fac5.css",
+    "main.js": "/label-generator/static/js/main.6f37f4cb.js",
+    "index.html": "/label-generator/index.html",
+    "main.1830fac5.css.map": "/label-generator/static/css/main.1830fac5.css.map",
+    "main.6f37f4cb.js.map": "/label-generator/static/js/main.6f37f4cb.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1830fac5.css",
+    "static/js/main.6f37f4cb.js"
+  ]
+}

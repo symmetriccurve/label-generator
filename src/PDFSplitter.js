@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { PDFDocument } from "pdf-lib";
-import { saveAs } from "file-saver";
 import {
   Container,
   Box,
@@ -13,6 +12,7 @@ import {
   LinearProgress,
 } from "@mui/material";
 import { CloudUpload as CloudUploadIcon } from "@mui/icons-material";
+import confetti from "canvas-confetti";
 import "./PDFSplitter.css";
 
 const PDFSplitter = () => {
@@ -20,11 +20,27 @@ const PDFSplitter = () => {
   const [fileName, setFileName] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [pdfUrl, setPdfUrl] = useState("");
+  const [downloadUrl, setDownloadUrl] = useState("");
 
-  const handleFileChange = (event) => {
+  const handleFileChange = async (event) => {
     const uploadedFile = event.target.files[0];
     setFile(uploadedFile);
     setFileName(uploadedFile ? uploadedFile.name : "");
+    if (uploadedFile) {
+      setPdfUrl(URL.createObjectURL(uploadedFile));
+      await splitPDF(uploadedFile);
+    }
+  };
+
+  const getFormattedDateTime = () => {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, "0");
+    const day = String(now.getDate()).padStart(2, "0");
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    return `${year}-${month}-${day}_${hours}-${minutes}`;
   };
 
   const splitPDF = async (file) => {
@@ -63,16 +79,19 @@ const PDFSplitter = () => {
 
     const pdfBytes = await newPdfDoc.save();
     const blob = new Blob([pdfBytes], { type: "application/pdf" });
-    saveAs(blob, "Meesho Shipping Labels without Invoice.pdf");
+    const formattedDateTime = getFormattedDateTime();
+    const downloadUrl = URL.createObjectURL(blob);
+    setDownloadUrl(downloadUrl);
 
     setIsProcessing(false);
     setProgress(100);
-  };
 
-  const handleSplit = async () => {
-    if (file) {
-      await splitPDF(file);
-    }
+    // Trigger confetti
+    confetti({
+      particleCount: 1000,
+      spread: 600,
+      origin: { y: 0.6 },
+    });
   };
 
   return (
@@ -80,7 +99,7 @@ const PDFSplitter = () => {
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Meesho Shipping Label Generator
+            Meesho Shipping Label Crop
           </Typography>
         </Toolbar>
       </AppBar>
@@ -101,7 +120,7 @@ const PDFSplitter = () => {
                 startIcon={<CloudUploadIcon />}
                 fullWidth
               >
-                Upload PDF
+                Upload
               </Button>
             </label>
             {fileName && (
@@ -116,11 +135,12 @@ const PDFSplitter = () => {
               <Button
                 variant="contained"
                 color="primary"
-                onClick={handleSplit}
+                href={downloadUrl}
+                download={`Meesho-labels-${getFormattedDateTime()}.pdf`}
                 fullWidth
-                disabled={!file || isProcessing}
+                disabled={!downloadUrl}
               >
-                Generate labels
+                Download
               </Button>
             </Box>
           </CardContent>
