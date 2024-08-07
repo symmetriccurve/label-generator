@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/label-generator/static/css/main.e6c13ad2.css",
-    "main.js": "/label-generator/static/js/main.1149cec6.js",
+    "main.css": "/label-generator/static/css/main.1830fac5.css",
+    "main.js": "/label-generator/static/js/main.c9dac79b.js",
     "index.html": "/label-generator/index.html",
-    "main.e6c13ad2.css.map": "/label-generator/static/css/main.e6c13ad2.css.map",
-    "main.1149cec6.js.map": "/label-generator/static/js/main.1149cec6.js.map"
+    "main.1830fac5.css.map": "/label-generator/static/css/main.1830fac5.css.map",
+    "main.c9dac79b.js.map": "/label-generator/static/js/main.c9dac79b.js.map"
   },
   "entrypoints": [
-    "static/css/main.e6c13ad2.css",
-    "static/js/main.1149cec6.js"
+    "static/css/main.1830fac5.css",
+    "static/js/main.c9dac79b.js"
   ]
 }
