@@ -131,18 +131,19 @@ const PDFSplitter = () => {
             {isProcessing && (
               <LinearProgress variant="determinate" value={progress} />
             )}
-            <Box mt={2}>
-              <Button
-                variant="contained"
-                color="primary"
-                href={downloadUrl}
-                download={`Meesho-labels-${getFormattedDateTime()}.pdf`}
-                fullWidth
-                disabled={!downloadUrl}
-              >
-                Download
-              </Button>
-            </Box>
+            {downloadUrl && (
+              <Box mt={2} display="flex" justifyContent="center">
+                <Button
+                  className="download-button"
+                  variant="contained"
+                  color="primary"
+                  href={downloadUrl}
+                  download={`Meesho-labels-${getFormattedDateTime()}.pdf`}
+                >
+                  Download
+                </Button>
+              </Box>
+            )}
           </CardContent>
         </Card>
       </Box>
